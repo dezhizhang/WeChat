@@ -68,16 +68,15 @@ exports.tpl = (content,message) => {
 
     }
 
-    let info = Object.assign({},{
-        content:content,
-        msgType:type,
-        createTime:new Date().getTime(),
-        ToUserName:message.ToUserName,
-        FromUserName:message.FromUserName,
-
-    })
-
-     return template(info)
+    let info = Object.assign({}, {
+        content: content,
+        createTime: new Date().getTime(),
+        msgType: type,
+        toUserName: message.FromUserName,
+        fromUserName: message.ToUserName
+      })
+    
+      return template(info)
 
 }
 

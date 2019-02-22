@@ -42,9 +42,11 @@ module.exports =(option,reply) => {
             let replyBody = ctx.body;
             let msg = ctx.weixin;
             let xml = util.tpl(replyBody,msg);
+
             ctx.status = 200;
             ctx.type="applyication/xml";
             ctx.body = xml;
+            
         }
      
      

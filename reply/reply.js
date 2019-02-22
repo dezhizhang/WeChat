@@ -3,7 +3,7 @@ exports.reply = async (ctx,next) => {
 
     if(message.MsgType =='text') {
         let content = message.Content;
-        let reply = 'Oh,你说的'+ content + '太复杂了无法解析！';
+        let reply = 'Oh,你说的'+ content + '太复杂了无法解析';
         if(content == '1') {
             reply = '你好呀'
         } else if(content == '2') {
