@@ -1,5 +1,3 @@
-
-
 module.exports = {
     wechat:{
         appID:'wxdb58ce74f3c12db9',

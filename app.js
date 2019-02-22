@@ -1,6 +1,6 @@
 const Koa = require('koa');
-const middle = require('./utils/middle');
-const config = require('./utils/config');
+const middle = require('./middle/middle');
+const config = require('./config/config');
 
 
 //创建一个实例

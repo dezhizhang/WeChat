@@ -2,7 +2,7 @@
 const Koa = require('koa');
 const sha1 = require('sha1');
 const RawBody = require('raw-body');
-const util = require('./util');
+const util = require('../utils/util');
 
 
 
