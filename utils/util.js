@@ -1,4 +1,8 @@
 const xml2js = require('xml2js');
+const template = require('../template/template');
+
+
+
 
 exports.parseXML = xml => {
     return new Promise((resolve,reject) => {
@@ -48,6 +52,33 @@ exports.formatMessage = result => {
     }
     return message;
 
+
+}
+
+exports.tpl = (content,message) => {
+    let type = 'text';
+    if(Array.isArray(content)) {
+        type = 'news';
+
+    }
+
+    if(!content) content ='消息为空';
+    if(content && content.type) {
+        type = content.type;
+
+    }
+
+    let info = Object.assign({},{
+        content:content,
+        msgType:type,
+        createTime:new Date().getTime(),
+        ToUserName:message.ToUserName,
+        FromUserName:message.FromUserName,
+
+
+    })
+
+     return template(info)
 
 }
 

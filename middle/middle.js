@@ -1,13 +1,9 @@
-
-const Koa = require('koa');
 const sha1 = require('sha1');
 const RawBody = require('raw-body');
 const util = require('../utils/util');
 
 
-
-
-module.exports =(option) => {
+module.exports =(option,reply) => {
     return async(ctx,next) => {
         let  {signature, timestamp,nonce,echostr} = ctx.query;
         
@@ -35,25 +31,21 @@ module.exports =(option) => {
             });
 
           
-
-
             let content = await util.parseXML(data);
-           
-
             let message = util.formatMessage(content.xml);
+            let d = new Date();
+
+            ctx.weixin = message;
+
            
-
-            let d = new Date()
-
+            //消息回复
+            await reply.apply(ctx,[ctx,next]);
+            let replyBody = ctx.body;
+            let msg = ctx.weixin;
+            let xml = util.tpl(replyBody,msg);
             ctx.status = 200;
-            ctx.type = 'application/xml';
-            ctx.body = `<xml>
-                <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
-                <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
-                <CreateTime>${parseInt(d.getTime())}</CreateTime>
-                <MsgType><![CDATA[text]]></MsgType>
-                <Content><![CDATA[${message.Content}]]></Content>
-                <MsgId>1234567890123456</MsgId></xml>`
+            ctx.type="applyication/xml";
+            ctx.body = xml;
         }
      
      
