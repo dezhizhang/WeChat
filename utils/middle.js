@@ -34,18 +34,26 @@ module.exports =(option) => {
                 encoding:ctx.charset
             });
 
-            console.log(data);
-            
+          
+
 
             let content = await util.parseXML(data);
+           
+
             let message = util.formatMessage(content.xml);
+           
 
             let d = new Date()
 
             ctx.status = 200;
             ctx.type = 'application/xml';
-            ctx.body = `<xml>  <ToUserName>< ![CDATA[${message.FromUserName}] ]></ToUserName>  <FromUserName>< ![CDATA[${message.ToUserName}] ]></FromUserName>  <CreateTime>${parseInt(d.getTime())}</CreateTime>  <MsgType>< ![CDATA[text] ]></MsgType>  <Content>< ![CDATA[this is a test] ]></Content>  <MsgId>1234567890123456</MsgId>  </xml>`
-
+            ctx.body = `<xml>
+                <ToUserName><![CDATA[${message.FromUserName}]]></ToUserName>
+                <FromUserName><![CDATA[${message.ToUserName}]]></FromUserName>
+                <CreateTime>${parseInt(d.getTime())}</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                <Content><![CDATA[${message.Content}]]></Content>
+                <MsgId>1234567890123456</MsgId></xml>`
         }
      
      
