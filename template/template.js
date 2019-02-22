@@ -3,21 +3,10 @@ const ejs = require('ejs');
 
 
 let template = `<xml>
-    <ToUserName><![CDATA[<%=message.FromUserName%>]]></ToUserName>
-    <FromUserName><![CDATA[<%=message.ToUserName%>]]></FromUserName>
+    <ToUserName><![CDATA[<%=FromUserName%>]]></ToUserName>
+    <FromUserName><![CDATA[<%=ToUserName%>]]></FromUserName>
     <CreateTime><%=createTime%></CreateTime>
-    <%if(msgType=='text'){%>
-        <MsgType><![CDATA[text]]></MsgType>
-        <Content><![CDATA[<%- message.Conten%>]]></Content>
-    <%}%> else if(msgType == 'image'){%>
-       <Image>
-            <MediaId><![CDATA[<%=content.mediaId%>]]></MediaId>
-       </Image>
-    <%} else if(msgType == 'video'){%>
-        <Video>
-            <MediaId><![CDATA[<%=content.mediaId%>]]></MediaId>
-        </Video>
-    <%}%>
+    <Content>< ![CDATA[<%=content%>]]></Content> 
     </xml>`
 
     const compield = ejs.compile(template);

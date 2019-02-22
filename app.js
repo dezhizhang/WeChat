@@ -1,6 +1,9 @@
 const Koa = require('koa');
 const middle = require('./middle/middle');
 const config = require('./config/config');
+const reply = require('./reply/reply');
+
+
 
 
 
@@ -9,7 +12,7 @@ let app = new Koa();
 
 
 //配置中间件
-app.use(middle(config));
+app.use(middle(config,reply.reply));
 
 app.listen(8082,() => {
     console.log('run 8082');
