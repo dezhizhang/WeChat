@@ -1,6 +1,8 @@
 
 const Koa = require('koa');
 const sha1 = require('sha1');
+const RawBody = require('raw-body');
+const util = require('./util');
 
 
 
@@ -25,6 +27,25 @@ module.exports =(option) => {
             if(sha !==signature) {
                 return (ctx.body =='failed');
             }
+            //接收用户传入的数据
+            let data = await RawBody(ctx.req,{
+                length:ctx.length,
+                limit:'1mb',
+                encoding:ctx.charset
+            });
+
+            console.log(data);
+            
+
+            let content = await util.parseXML(data);
+            let message = util.formatMessage(content.xml);
+
+            let d = new Date()
+
+            ctx.status = 200;
+            ctx.type = 'application/xml';
+            ctx.body = `<xml>  <ToUserName>< ![CDATA[${message.FromUserName}] ]></ToUserName>  <FromUserName>< ![CDATA[${message.ToUserName}] ]></FromUserName>  <CreateTime>${parseInt(d.getTime())}</CreateTime>  <MsgType>< ![CDATA[text] ]></MsgType>  <Content>< ![CDATA[this is a test] ]></Content>  <MsgId>1234567890123456</MsgId>  </xml>`
+
         }
      
      
