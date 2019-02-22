@@ -33,7 +33,6 @@ module.exports =(option,reply) => {
           
             let content = await util.parseXML(data);
             let message = util.formatMessage(content.xml);
-            let d = new Date();
 
             ctx.weixin = message;
 

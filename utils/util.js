@@ -75,7 +75,6 @@ exports.tpl = (content,message) => {
         ToUserName:message.ToUserName,
         FromUserName:message.FromUserName,
 
-
     })
 
      return template(info)
