@@ -1,33 +1,14 @@
 const Koa = require('koa');
-const sha1 = require('sha1');
+const middle = require('./utils/middle');
+const config = require('./utils/config');
 
+
+//创建一个实例
 let app = new Koa();
 
 
-const config = {
-    wechat:{
-        appID:'wxdb58ce74f3c12db9',
-        appsecret:'de0d7f5138a37f10d3ee1d386b5e0a71',
-        token:'sjkfdjhkrfhkzrfionkjzrfdonkjlzfd'
-    }
-}
-
-
-app.use(async(ctx,next) => {
-   let  {signature, timestamp,nonce,echostr} = ctx.query;
-   let token = config.wechat.token;
-   let str = [token,timestamp,nonce].sort().join('');
-
-   let sha = sha1(str);
-   if(sha === signature) {
-       ctx.body = echostr;
-
-   } else {
-       ctx.body = 'error'
-   }
-
-
-});
+//配置中间件
+app.use(middle(config));
 
 app.listen(8082,() => {
     console.log('run 8082');
