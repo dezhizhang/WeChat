@@ -9,7 +9,14 @@ let wechatConfig = {
     wechat: {
         appID:config.wechat.appID,
         appsecret:config.wechat.appsecret,
-        token:config.wechat.token
+        token:config.wechat.token,
+        getAccessToken:async () => {
+
+        },
+        saveAccessToken:async () => {
+
+        }
+
     }
 }
 
@@ -28,7 +35,7 @@ let app = new Koa();
     
 })()
 
-console.log('1');
+
 
 
 
