@@ -12,6 +12,9 @@ exports.reply = async (ctx,next) => {
         } else if(content == '3') {
             reply = '没有找你说的内容';
 
+        }else {
+            reply = content;
+            
         }
 
         ctx.body = reply;
