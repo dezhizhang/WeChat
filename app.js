@@ -3,6 +3,7 @@ const middle = require('./middle/middle');
 const config = require('./config/config');
 const reply = require('./reply/reply');
 const Wechat = require('./index');
+const Token = require('./model/token');
 
 
 let wechatConfig = {
@@ -11,10 +12,15 @@ let wechatConfig = {
         appsecret:config.wechat.appsecret,
         token:config.wechat.token,
         getAccessToken:async () => {
+            let res = await Token.getAccessToken();
+            
+            return res;
 
         },
-        saveAccessToken:async () => {
+        saveAccessToken:async (data) => {
+            let res = await Token.saveAccessToken(data);
 
+            return res;
         }
 
     }

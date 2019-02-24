@@ -20,6 +20,7 @@
   "dependencies": {
     "ejs": "^2.6.1",
     "koa": "^2.7.0",
+    "mongoose": "^5.4.15",
     "raw-body": "^2.3.3",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",

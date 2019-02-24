@@ -13,6 +13,8 @@ module.exports = class Wechat {
         this.fetchAcessToken();
       
 
+      
+
     
     }
     //发起请求
@@ -30,7 +32,10 @@ module.exports = class Wechat {
     }
     //获取token
     async fetchAcessToken() {
+    
         let data = await this.getAccessToken()
+        console.log(data);
+
 
         if(!this.isValidToken(data)) {
             data = await this.updateAccessToken();
@@ -53,6 +58,9 @@ module.exports = class Wechat {
         let expiresIn = d.getTime() + (data.expires_in - 20) * 1000;
 
         data.expires_in = expiresIn;
+
+        console.log(data);
+
        
 
 
