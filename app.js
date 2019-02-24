@@ -2,6 +2,16 @@ const Koa = require('koa');
 const middle = require('./middle/middle');
 const config = require('./config/config');
 const reply = require('./reply/reply');
+const Wechat = require('./index');
+
+
+let wechatConfig = {
+    wechat: {
+        appID:config.wechat.appID,
+        appsecret:config.wechat.appsecret,
+        token:config.wechat.token
+    }
+}
 
 
 
@@ -9,6 +19,17 @@ const reply = require('./reply/reply');
 
 //创建一个实例
 let app = new Koa();
+
+
+
+
+(async function(){
+    let clinet = new Wechat(wechatConfig.wechat);
+    
+})()
+
+console.log('1');
+
 
 
 //配置中间件
