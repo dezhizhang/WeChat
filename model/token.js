@@ -49,7 +49,7 @@ TokenSchema.statics = {
 
     async saveAccessToken(data) {
         let token = await this.findOne({
-            'name':"access_token'"
+            'name':"access_token"
         });
         if(token) {
             token.token = data.acess_token;

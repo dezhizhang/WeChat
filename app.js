@@ -4,6 +4,8 @@ const config = require('./config/config');
 const reply = require('./reply/reply');
 const Wechat = require('./index');
 const Token = require('./model/token');
+const { connect,initSchema } = require('./model/connect');
+
 
 
 let wechatConfig = {
@@ -37,7 +39,18 @@ let app = new Koa();
 
 
 (async function(){
+
+    await connect(config.db);
+    initSchema();
+    
     let clinet = new Wechat(wechatConfig.wechat);
+        //配置中间件
+    app.use(middle(config,reply.reply));
+
+    app.listen(8082,() => {
+        console.log('run 8082');
+
+    })
     
 })()
 
@@ -45,10 +58,3 @@ let app = new Koa();
 
 
 
-//配置中间件
-app.use(middle(config,reply.reply));
-
-app.listen(8082,() => {
-    console.log('run 8082');
-
-})
