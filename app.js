@@ -8,7 +8,7 @@ const reply = require('./reply/reply');
 let app = new Koa();
 
 
-    //配置中间件
+//配置中间件
 app.use(middle(config.wechat,reply.reply));
 
 

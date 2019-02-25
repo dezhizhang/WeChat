@@ -1,3 +1,9 @@
+
+const config = require('../config/config');
+const Wechat = require('../middle/wechat');
+
+let wechatApi = new Wechat(config.wechat);
+
 exports.reply = async (ctx,next) => {
     let message = ctx.weixin;
 
@@ -12,8 +18,8 @@ exports.reply = async (ctx,next) => {
         } else if(content == '3') {
             reply = '没有找你说的内容';
 
-        }else {
-            reply = content;
+        }else if(content == '4') {
+           
             
         }
 

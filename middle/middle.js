@@ -6,12 +6,16 @@ const Wechat = require('./wechat');
 
 module.exports =(option,reply) => {
     let wechat = new Wechat(option);
+   
+
 
     return async(ctx,next) => {
+     
+
         let  {signature, timestamp,nonce,echostr} = ctx.query;
-        
-        
-        let token = option.wechat.token;
+    
+
+        let token = option.token;
         let str = [token,timestamp,nonce].sort().join('');
         let sha = sha1(str);
 
@@ -33,19 +37,20 @@ module.exports =(option,reply) => {
                 encoding:ctx.charset
             });
 
-          
+           
+  
             let content = await util.parseXML(data);
             let message = util.formatMessage(content.xml);
 
             ctx.weixin = message;
-
            
             //消息回复
             await reply.apply(ctx,[ctx,next]);
             let replyBody = ctx.body;
             let msg = ctx.weixin;
             let xml = util.tpl(replyBody,msg);
-
+          
+           
             ctx.status = 200;
             ctx.type="applyication/xml";
             ctx.body = xml;

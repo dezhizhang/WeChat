@@ -6,9 +6,9 @@ let wechat_file = path.join(__dirname,'./wechat.txt');
 module.exports = {
     db:"mongodb://localhost:27017/cms",
     wechat:{
-        appID:'wx5af57e57248091bd',
-        appsecret:'bf1b6ff43cdddea23e3be492b80449ec',
-        token:'weixin',
+        appID:'wxdb58ce74f3c12db9',
+        appsecret:'de0d7f5138a37f10d3ee1d386b5e0a71',
+        token:'sjkfdjhkrfhkzrfionkjzrfdonkjlzfd',
         getAccessToken:function() {
             return util.readFileAsync(wechat_file);
         },

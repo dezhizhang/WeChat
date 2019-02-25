@@ -4,9 +4,6 @@ const fs = require('fs');
 const Promise = require('bluebird');
 
 
-
-
-
 exports.parseXML = xml => {
     return new Promise((resolve,reject) => {
         xml2js.parseString(xml,{trim:true},(err,result) => {
