@@ -2,57 +2,23 @@ const Koa = require('koa');
 const middle = require('./middle/middle');
 const config = require('./config/config');
 const reply = require('./reply/reply');
-const Wechat = require('./index');
-const Token = require('./model/token');
-const { connect,initSchema } = require('./model/connect');
-
-
-
-let wechatConfig = {
-    wechat: {
-        appID:config.wechat.appID,
-        appsecret:config.wechat.appsecret,
-        token:config.wechat.token,
-        getAccessToken:async () => {
-            let res = await Token.getAccessToken();
-            
-            return res;
-
-        },
-        saveAccessToken:async (data) => {
-            let res = await Token.saveAccessToken(data);
-
-            return res;
-        }
-
-    }
-}
-
-
-
 
 
 //创建一个实例
 let app = new Koa();
 
 
+    //配置中间件
+app.use(middle(config.wechat,reply.reply));
 
 
-(async function(){
 
-    await connect(config.db);
-    initSchema();
-    
-    let clinet = new Wechat(wechatConfig.wechat);
-        //配置中间件
-    app.use(middle(config,reply.reply));
+app.listen(8082,() => {
+    console.log('run 8082');
 
-    app.listen(8082,() => {
-        console.log('run 8082');
+})
 
-    })
-    
-})()
+
 
 
 

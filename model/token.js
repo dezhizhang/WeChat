@@ -1,84 +1,68 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-const TokenSchema = new Schema({
-    name:{ type:String },
-    token:{ type:String },
-    expires_in:{ type:Number },
-    meta:{
-        createAt:{
-            type:Date,
-            default:Date.now()
-        },
-        updatedAt:{
-            type:Date,
-            default:Date.now()
-        }
+const TokenSchema = new mongoose.Schema({
+  name: String,
+  access_token: String,
+  expires_in: Number,
+  meta: {
+    createAt: {
+      type: Date,
+      default: Date.now()
+    },
+    updateAt: {
+      type: Date,
+      default: Date.now()
     }
-});
+  }
+})
 
-TokenSchema.pre('save',(next) => {
-    if(this.isNew) {
-        this.meta.createAt = this.meta.updatedAt = Date.now();
+TokenSchema.pre('save', function (next) {
+  if (this.isNew) {
+    this.meta.createAt = this.meta.updateAt = Date.now()
+  } else {
+    this.meta.updateAt = Date.now()
+  }
 
-    } else {
-        this.meta.updatedAt = Date.now();
-
-    }
-
-    next();
-
-
-});
-
+  next()
+})
 
 TokenSchema.statics = {
-    async getAccessToken() {
-        let token = await this.findOne({
-            'name':'access_token'
-        });
+  async getAccessToken () {
+    const token = await this.findOne({ name: 'access_token' }).exec();
+    return token
+  },
 
-        if(token && token.token) {
-            token.access_token = token.token;
+  async saveAccessToken (data) {
+  
+    let token = await this.findOne({ name: 'access_token' }).exec();
+    console.log(token);
+    
+    if (token) {
+      token.access_token = data.access_token
+      token.expires_in = data.expires_in
+    } else {
+      token = new Token({
+        name: 'access_token',
+        expires_in: data.expires_in,
+        access_token: data.access_token
+      })
+    }
 
-        }
+    try {
+      await token.save()
+    } catch (e) {
+      console.log('存储失败')
+      console.log(e)
+    }
 
-        return token;
-
-    },
-
-    async saveAccessToken(data) {
-        let token = await this.findOne({
-            'name':"access_token"
-        });
-        if(token) {
-            token.token = data.acess_token;
-            token.expires_in = data.expires_in;
-
-        } else {
-            token = new Token({
-                name:'access_token',
-                token:data.access_token,
-                expires_in:data.expires_in
-            })
-
-            await token.save();
-
-        }
-
-        return data;
-    } 
+    return data
+  }
 }
 
-
-
-
-const Token = mongoose.model('Token',TokenSchema,'token');
-
+const Token = mongoose.model('Token', TokenSchema,'token');
 
 module.exports = Token;
-
-
 
 
 

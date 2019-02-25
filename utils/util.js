@@ -1,5 +1,8 @@
 const xml2js = require('xml2js');
 const template = require('../template/template');
+const fs = require('fs');
+const Promise = require('bluebird');
+
 
 
 
@@ -78,6 +81,36 @@ exports.tpl = (content,message) => {
     
       return template(info)
 
+}
+
+
+exports.readFileAsync = function(fpath,encoding) {
+    return new Promise((resolve,reject) => {
+        fs.readFile(fpath,encoding,(error,content) => {
+            if(error) {
+                reject(error);
+
+            } else {
+                resolve(content);
+
+            }
+        })
+    })
+}
+
+
+exports.writeFileAsync = function(fpath,content) {
+    return new Promise(function(resolve,reject) {
+        fs.writeFile(fpath,content,(err,content) => {
+            if(err) {
+                reject(err);
+
+            } else {
+                resolve(content);
+
+            }
+        })
+    })
 }
 
 
